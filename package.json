@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/IgorAleks88/caesar-cipher-cli/issues"
   },
-  "homepage": "https://github.com/IgorAleks88/caesar-cipher-cli#readme"
+  "homepage": "https://github.com/IgorAleks88/caesar-cipher-cli#readme",
+  "dependencies": {
+    "commander": "^7.2.0"
+  }
 }
