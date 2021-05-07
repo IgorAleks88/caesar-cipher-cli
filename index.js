@@ -30,11 +30,17 @@ program
 
 program.parse(process.argv);
 const options = program.opts();
-console.log(options);
+// console.log(options.shift);
 
-const rs = fs.ReadStream('./input.txt');
-const ts = new CounterTransform('w');
-const ws = fs.WriteStream('./output.txt');
+let rs = process.stdin;
+const ts = new CounterTransform(options.shift);
+let ws = process.stdout;
+
+if (options.input) {
+    if (fs.access)
+    {rs = fs.ReadStream(options.input)}
+}
+if (options.output) {ws = fs.WriteStream(options.output)}
 
 
 rs.pipe(ts).pipe(ws);
