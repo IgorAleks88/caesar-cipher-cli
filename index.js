@@ -3,6 +3,8 @@ const { program } = require('commander');
 const { Transform } = require('stream');
 const fs = require('fs');
 
+const {cipher} = require('./caesar-cipher');
+
 class CounterTransform extends Transform {
     constructor (rot) {
         super();
@@ -13,7 +15,7 @@ class CounterTransform extends Transform {
         // const resultString = `*${chunk.toString('utf8')}*`;
 
         const chunkArr = chunk.toString().split('');
-        const resultString = chunkArr.join(this.rot);
+        const resultString = cipher(chunkArr, this.rot).join('');
   
         callback(null, resultString);
       } catch (err) {
@@ -30,10 +32,16 @@ program
 
 program.parse(process.argv);
 const options = program.opts();
-// console.log(options.shift);
+let shift = parseInt(options.shift, 10);
+if (options.action === 'decode') { shift *= (-1)}
+else if ( options.action !== 'encode') {
+  throw error('Invalid action');
+}
+
+shift = shift % 26;
 
 let rs = process.stdin;
-const ts = new CounterTransform(options.shift);
+const ts = new CounterTransform(shift);
 let ws = process.stdout;
 
 if (options.input) {
