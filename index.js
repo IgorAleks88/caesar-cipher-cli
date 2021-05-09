@@ -30,6 +30,9 @@ program
 
 program.parse(process.argv);
 const options = program.opts();
+if (typeof options.shift !== 'number') {
+  process.stderr.write(`required option '-s, --shift <number>' is not a number`, () => process.exit(1))
+}
 let shift = parseInt(options.shift, 10);
 if (options.action === 'decode') { shift *= (-1)}
 else if ( options.action !== 'encode') {
