@@ -12,8 +12,6 @@ class CounterTransform extends Transform {
     }
     _transform(chunk, encoding, callback) {
       try {
-        // const resultString = `*${chunk.toString('utf8')}*`;
-
         const chunkArr = chunk.toString().split('');
         const resultString = cipher(chunkArr, this.rot).join('');
   
@@ -35,7 +33,7 @@ const options = program.opts();
 let shift = parseInt(options.shift, 10);
 if (options.action === 'decode') { shift *= (-1)}
 else if ( options.action !== 'encode') {
-  throw error('Invalid action');
+  process.stderr.write(`required option '-a, --action <string>' supposed to be "encode" or "decode"`, () => process.exit(1))
 }
 
 shift = shift % 26;
